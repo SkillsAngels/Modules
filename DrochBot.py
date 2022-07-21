@@ -14,6 +14,7 @@ __version__ = (0, 0, 7)
 # 🌐 https://www.gnu.org/licenses/agpl-3.0.html
 
 # meta developer: @hikkaftgmods
+# meta banner: https://i.imgur.com/awltLuz.jpeg
 
 
 from .. import loader, utils
