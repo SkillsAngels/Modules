@@ -30,7 +30,7 @@ class LoveMod(loader.Module):
         """Активирует красивые слова для девушки"""
 
         for i, sentence in enumerate(
-            {
+            [
                 "❤️ | Пожалуйста солнце читай до конца!!",
                 "❤️ | ......",
                 "❤️ | Ты самая лучшая.",
@@ -42,7 +42,7 @@ class LoveMod(loader.Module):
                 "❤️ | Незабываемая ",
                 "❤️ | И вообще, ты мое солнце.",
                 "❤️ | Я Тебя Люблю ❤️",
-            }
+            ]
         ):
             message = await utils.answer(message, f"{i} {sentence}")
             await asyncio.sleep(1)
@@ -51,7 +51,7 @@ class LoveMod(loader.Module):
         """Активирует красивые слова для парня"""
 
         for i, sentence in enumerate(
-            {
+            [
                 "❤️ | Пожалуйста Зайка читай до конца!!",
                 "❤️ | ......",
                 "❤️ | Ты самый лучший.",
@@ -63,7 +63,7 @@ class LoveMod(loader.Module):
                 "❤️ | Незабываемый ",
                 "❤️ | И вообще, ты мое счастье.",
                 "❤️ | Я Тебя Люблю ❤️",
-            }
+            ]
         ):
             message = await utils.answer(message, f"{i} {sentence}")
             await asyncio.sleep(1)
