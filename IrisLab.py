@@ -1,3 +1,5 @@
+import contextlib
+
 __version__ = (0, 0, 1)
 
 # _           _            _ _
@@ -10,6 +12,9 @@ __version__ = (0, 0, 1)
 #              © Copyright 2022
 #
 #         developed by @lotosiiik, @byateblan
+
+# █ █ ▀ █▄▀ ▄▀█ █▀█ ▀    ▄▀█ ▀█▀ ▄▀█ █▀▄▀█ ▄▀█
+# █▀█ █ █ █ █▀█ █▀▄ █ ▄  █▀█  █  █▀█ █ ▀ █ █▀█
 #
 # 🔒 Licensed under the GNU AGPLv3
 # 🌐 https://www.gnu.org/licenses/agpl-3.0.html
@@ -22,6 +27,7 @@ import logging
 import re
 import asyncio
 from .. import loader, utils
+from telethon.tl.types import Message
 
 
 logger = logging.getLogger(__name__)
@@ -29,11 +35,17 @@ logger = logging.getLogger(__name__)
 
 @loader.tds
 class IrisLabMod(loader.Module):
-    """Модуль который показывает лаб/жертв(в целом бесполезный модуль)
-    p.s в этом модуле возможны задержки на получение инфы сорян"""
+    """Показывает лаб/жертв. Возможны задержки на получение инф-ции"""
 
     strings = {
         "name": "IrisLab",
+        "saved": "💾 <b>Заметка с именем </b><code>{}</code><b> сохранена</b>.",
+        "no_reply": "🚫 <b>Требуется реплай на контент заметки.</b>",
+        "no_name": "🚫 <b>Укажите имя заметки.</b>",
+        "no_note": "🚫 <b>Данная заметка не найдена или она не существует.</b>",
+        "available_notes": "💾 <b>Текущие заметки:</b>\n",
+        "no_notes": "😔 <b>У тебя пока что нет заметок</b>",
+        "deleted": "🙂 <b>Заметка с именем </b><code>{}</code> <b>удалена</b>",
         "lab_data": {
             "d": "(.*) Досье лаборатории (.*)",
             "s": "(.*) Руководитель: (.*)",
@@ -61,6 +73,7 @@ class IrisLabMod(loader.Module):
 
         self.client = client
         self.db = db
+        self._notes = self.get("victims_list", {})
 
     async def message_q(
         self,
@@ -137,28 +150,25 @@ dis: Своих болезней 🤒
 
 f: Горячка руководителя 
 v: Ежедневная премия(ежа) 💸"""
-                return await utils.answer(
-                        message,
-                        text
-                    )
+                return await utils.answer(message, text)
             elif flag == "v":
-                    await asyncio.sleep(3)
-                    victims = await self.message_q("Мои жертвы", 707693258, mark_read=True, delete=True)
-                    pattern = r"""(.*) Ежедневная премия: (.*)"""
-                    result = re.search(pattern, victims.text).group()
-                    text.append(result)
-            else:
-                    if flag in data:
-                        app_text = "✅ Все патогены приготовлены" if flag == "np" else "❌ Горячки нету"
-                        text.append(app_text)
-                    else:
-                        text.append("Параметр -{} не указан.".format(
-                            flag
-                        ))
-            return await utils.answer(
-                message,
-                "\n".join(text)
+                await asyncio.sleep(3)
+                victims = await self.message_q(
+                    "Мои жертвы", 707693258, mark_read=True, delete=True
                 )
+                result = re.search(
+                    r"""(.*) Ежедневная премия: (.*)""", victims.text
+                ).group()
+                text.append(result)
+            elif flag in data:
+                app_text = (
+                    "✅ Все патогены приготовлены" if flag == "np" else "❌ Горячки нету"
+                )
+                text.append(app_text)
+            else:
+                text.append(f"Параметр -{flag} не указан.")
+            return await utils.answer(message, "\n".join(text))
+
     async def victimscmd(self, message):
         """Комманда показывает ваши жертвы"""
         victims = await self.message_q(
@@ -176,22 +186,127 @@ v: Ежедневная премия(ежа) 💸"""
     async def upgcmd(self, message):
         """Увеличивает зз/имун и тд.Как использовать(Пример) .upg летальность (число 1-5)"""
         args = utils.get_args(message)
-        characteristics = ("заразность", "летальность", "иммунитет",
-                            "безопасность", "разработка", "патоген")
-        if not len(args) == 2:
-            await utils.answer(
-            message,
-            "Указано больше или меньше двух параметров")
+        characteristics = (
+            "заразность",
+            "летальность",
+            "иммунитет",
+            "безопасность",
+            "разработка",
+            "патоген",
+        )
+        if len(args) != 2:
+            await utils.answer(message, "Указано больше или меньше двух параметров")
         elif args[0].lower() not in characteristics:
-            await utils.answer(
-            message,
-            "Данного улучшения не существует")
+            await utils.answer(message, "Данного улучшения не существует")
         elif not args[1].isdigit():
-            await utils.answer(
-            message,
-            "Второй параметр не является числом")
+            await utils.answer(message, "Второй параметр не является числом")
         elif int(args[1]) > 5 or int(args[1]) < 0:
-            await utils.answer(
-            message,
-            "Уровень указан вне допустимого диапазона")
-        else: await message.respond(f"++{args[0].lower()} {args[1]}")
+            await utils.answer(message, "Уровень указан вне допустимого диапазона")
+        else:
+            await message.respond(f"++{args[0].lower()} {args[1]}")
+
+    async def gcmd(self, message: Message):
+        """<name> - показывает заметку"""
+        args = utils.get_args_raw(message)
+        if not args:
+            await utils.answer(message, self.strings("no_name"))
+            return
+
+        asset = self._get_note(args)
+        if not asset:
+            await utils.answer(message, self.strings("no_note"))
+            return
+
+        await self._client.send_message(
+            message.peer_id,
+            await self._db.fetch_asset(asset["id"]),
+            reply_to=getattr(message, "reply_to_msg_id", False),
+        )
+
+        if message.out:
+            await message.delete()
+
+    async def svcmd(self, message):
+        """<name> - для сохранения заметки"""
+        args = utils.get_args_raw(message)
+        folder = "victims_list"
+
+        reply = await message.get_reply_message()
+        if not (reply and args):
+            await utils.answer(message, self.strings("no_reply"))
+            return
+        if folder not in self._notes:
+            self._notes[folder] = {}
+            logger.warning(f"Created new folder {folder}")
+
+        asset = await self._db.store_asset(reply)
+
+        type_ = "☣️"
+
+        self._notes[folder][args] = {"id": asset, "type": type_}
+
+        self.set("victims_list", self._notes)
+
+        await utils.answer(message, self.strings("saved").format(args, folder))
+
+    def _get_note(self, name: str):
+        for notes in self._notes.values():
+            for note, asset in notes.items():
+                if note == name:
+                    return asset
+
+    def _del_note(self, name: str):
+        for category, notes in self._notes.copy().items():
+            for note in notes.copy():
+                if note == name:
+                    del self._notes[category][note]
+
+                if not self._notes[category]:
+                    del self._notes[category]
+
+                self.set("victims_list", self._notes)
+                return True
+
+        return False
+
+    async def dcmd(self, message: Message):
+        """<name> - удаляет заметку"""
+        args = utils.get_args_raw(message)
+        if not args:
+            await utils.answer(message, self.strings("no_name"))
+            return
+
+        asset = self._get_notes(args)
+        if not asset:
+            await utils.answer(message, self.strings("no_note"))
+            return
+
+        with contextlib.suppress(Exception):
+            await (await self._db.fetch_asset(asset["id"])).delete()
+
+        self._del_note(args)
+
+        await utils.answer(message, self.strings("deleted").format(args))
+
+    async def listcmd(self, message: Message):
+        """[folder] - показывает все заметки"""
+        args = utils.get_args_raw(message)
+
+        if not self._notes:
+            await utils.answer(message, self.strings("no_notes"))
+            return
+
+        result = self.strings("available_notes")
+        if not args or args not in self._notes:
+            for category, notes in self._notes.items():
+                result += f"\n🔸 <b>{category}</b>\n"
+                for note, asset in notes.items():
+                    result += f"    {asset['type']} <code>{note}</code>\n"
+
+            await utils.answer(message, result)
+            return
+
+        for note, asset in self._notes[args].items():
+            result += f"{asset['type']} <code>{note}</code>\n"
+
+        await utils.answer(message, result)
