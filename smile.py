@@ -1,4 +1,4 @@
-__version__ = (1, 0, 0)
+__version__ = (0, 0, 2)
 #
 # _           _            _ _
 # | |         | |          (_) |
@@ -27,12 +27,14 @@ class Smile(loader.Module):
     strings = {"name": "Smile"}
 
     async def heartscmd(self, message: Message):
+        """запускается цикл из меняющихся сердец 💛💙"""
         for _ in range(10):
             for heart in {"🤍", "🤎", "❤️", "💙", "💛", "💜", "🖤"}:
                 message = await utils.answer(message, heart)
                 await asyncio.sleep(0.4)
 
     async def mooncmd(self, message: Message):
+        """запускается цикл из меняющихся лун 🌚 🌝"""
         for _ in range(10):
             for moon in ["🌝", "🌚"]:
                 message = await utils.answer(message, moon)
