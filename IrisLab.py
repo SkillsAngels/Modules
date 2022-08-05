@@ -276,7 +276,7 @@ v: Ежедневная премия(ежа) 💸"""
             await utils.answer(message, self.strings("no_name"))
             return
 
-        asset = self._get_notes(args)
+        asset = self._get_note(args)
         if not asset:
             await utils.answer(message, self.strings("no_note"))
             return
