@@ -54,7 +54,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/26",
+            "https://t.me/VoiceAmore/101",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
