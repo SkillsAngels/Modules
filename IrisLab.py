@@ -69,7 +69,7 @@ class IrisLabMod(loader.Module):
     }
 
     async def client_ready(self, client, db):
-        db.set("Iris", "chat_biowar", 707693258)
+        db.set("Iris", "chat_biowar", "@iris_black_bot")
 
         self.client = client
         self.db = db
@@ -97,7 +97,8 @@ class IrisLabMod(loader.Module):
 
     async def labcmd(self, message):
         """Модуль который выдаст вам статистику вашей лаборатории (лаб)"""
-        lab = await self.message_q(".Лаб", 707693258, mark_read=True, delete=True)
+        bot = "@iris_black_bot"
+        lab = await self.message_q(".Лаб", bot, mark_read=True, delete=True)
         args_raw = utils.get_args_raw(message)
         if not args_raw:
             return await utils.answer(message, lab.text)
@@ -153,8 +154,9 @@ v: Ежедневная премия(ежа) 💸"""
                 return await utils.answer(message, text)
             elif flag == "v":
                 await asyncio.sleep(3)
+                bot = "@iris_black_bot"
                 victims = await self.message_q(
-                    "Мои жертвы", 707693258, mark_read=True, delete=True
+                    "Мои жертвы", bot , mark_read=True, delete=True
                 )
                 result = re.search(
                     r"""(.*) Ежедневная премия: (.*)""", victims.text
@@ -171,9 +173,10 @@ v: Ежедневная премия(ежа) 💸"""
 
     async def victimscmd(self, message):
         """Комманда показывает ваши жертвы"""
+        bot = "@iris_black_bot"
         victims = await self.message_q(
             "Мои жертвы",
-            707693258,
+            bot,
             mark_read=True,
             delete=True,
         )
