@@ -1,4 +1,4 @@
-version = (0, 0, 1)
+version = (0, 0, 2)
 
 # for more info: https://murix.ru/files/ftg
 # by xadjilut, 2021
@@ -46,7 +46,7 @@ class IrisMod(loader.Module):
         self.client = client
         self.db = db
         self.myid = (await client.get_me()).id
-        self.iris = "@iris_black_bot"
+        self.iris = 5455729895
 
     async def farmoncmd(self, message):
         """Запустить автофарминг"""
