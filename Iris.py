@@ -17,6 +17,8 @@ version = (0, 0, 1)
 #         developed by @lotosiiik, @byateblan
 
 # meta developer: @hikkaftgmods
+# meta banner: https://te.legra.ph/file/a428776824470e0bdccb6.jpg
+# meta pic: https://te.legra.ph/file/98192f1f7953275baead5.jpg
 
 import random
 from .. import loader, utils
