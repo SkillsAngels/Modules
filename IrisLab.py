@@ -189,6 +189,7 @@ v: Ежедневная премия(ежа) 💸"""
     async def upgcmd(self, message):
         """Увеличивает зз/имун и тд.Как использовать(Пример) .upg летальность (число 1-5)"""
         args = utils.get_args(message)
+        bot = "@iris_black_bot"
         characteristics = (
             "заразность",
             "летальность",
@@ -206,7 +207,17 @@ v: Ежедневная премия(ежа) 💸"""
         elif int(args[1]) > 5 or int(args[1]) < 0:
             await utils.answer(message, "Уровень указан вне допустимого диапазона")
         else:
-            await message.respond(f"++{args[0].lower()} {args[1]}")
+            upgrade = await self.message_q(
+            f"++{args[0].lower()} {args[1]}",
+            bot,
+            mark_read=True,
+            delete=True,
+        )
+
+            args_raw = utils.get_args_raw(message)
+
+            if not args_raw:
+                await utils.answer(message, upgrade.text)
 
     async def gcmd(self, message: Message):
         """<name> - показывает заметку"""
