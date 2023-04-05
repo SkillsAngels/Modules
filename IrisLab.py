@@ -216,8 +216,8 @@ v: Ежедневная премия(ежа) 💸"""
 
             args_raw = utils.get_args_raw(message)
 
-            if not args_raw:
-                await utils.answer(message, upgrade.text)
+            
+            await utils.answer(message, upgrade.text)
 
     async def gcmd(self, message: Message):
         """<name> - показывает заметку"""
