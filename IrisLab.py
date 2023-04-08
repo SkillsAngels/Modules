@@ -328,7 +328,7 @@ v: Ежедневная премия(ежа) 💸"""
     async def iccmd(self, message: Message):
         """Комманда котрая вычисляет сколько 🧬Био-ресурсов или же ic☣️ нужно\nПример: .ic <характеристика> <уровень С> <уровень До>"""
         args = utils.get_args(message)
-        if not args or len(args) != 3 or not args[1].isdigit() or not args[2].isdigit() or args[2] == args[1] or args[2] < args[1]:
+        if not args or len(args) != 3 or not args[1].isdigit() or not args[2].isdigit() or in(targs[2]) == int(args[1]) or int(args[2]) < int(args[1]):
             await utils.answer(
                 message, "🚫| <b>Чтобы использовать калькулятор напишите .ic <навык> <уровень С> <уровень До></b>"
             )
