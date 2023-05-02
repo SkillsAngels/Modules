@@ -119,7 +119,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/74",
+            "https://t.me/AniVoicec/6",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -132,7 +132,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/81",
+            "https://t.me/AniVoicec/8",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -145,7 +145,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/82",
+            "https://t.me/AniVoicec/9",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -158,7 +158,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/83",
+            "https://t.me/AniVoicec/10",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -171,7 +171,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/84",
+            "https://t.me/AniVoicec/11",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -184,7 +184,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/85",
+            "https://t.me/AniVoicec/12",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -197,7 +197,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/86",
+            "https://t.me/AniVoicec/13",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -210,7 +210,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/87",
+            "https://t.me/AniVoicec/14",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -223,7 +223,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/91",
+            "https://t.me/AniVoicec/15",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -236,7 +236,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/92",
+            "https://t.me/AniVoicec/16",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -249,7 +249,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/93",
+            "https://t.me/AniVoicec/17",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -262,7 +262,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/94",
+            "https://t.me/AniVoicec/18",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -275,7 +275,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/95",
+            "https://t.me/AniVoicec/19",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -288,7 +288,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/96",
+            "https://t.me/AniVoicec/20",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -301,7 +301,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/97",
+            "https://t.me/AniVoicec/21",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -314,7 +314,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/98",
+            "https://t.me/AniVoicec/22",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -327,7 +327,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/99",
+            "https://t.me/AniVoicec/23",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
@@ -340,7 +340,7 @@ class AnimeVoicesMod(loader.Module):
         await message.delete()
         await message.client.send_file(
             message.to_id,
-            "https://t.me/VoiceAmore/100",
+            "https://t.me/AniVoicec/24",
             voice_note=True,
             reply_to=reply.id if reply else None,
         )
