@@ -7,7 +7,7 @@ version = (0, 0, 2)
 
 # _           _            _ _
 # | |         | |          (_) |
-# | |     _ | |_ _  _ _| | 
+# | |     _ | |_ _  _ _| |
 # | |    / _ \| / _ \/ | | |/ /
 # | |_| (_) | || (_) \ \ |   <
 # \_/\_/ \\_/|_/_|_|\_\
@@ -21,10 +21,12 @@ version = (0, 0, 2)
 # meta pic: https://te.legra.ph/file/98192f1f7953275baead5.jpg
 
 import random
-from .. import loader, utils
 from datetime import timedelta
+
 from telethon import functions
 from telethon.tl.types import Message
+
+from .. import loader, utils
 
 
 @loader.tds
@@ -33,7 +35,10 @@ class IrisMod(loader.Module):
 
     strings = {
         "name": "Iris",
-        "farmon": "<i>✅Отложенка создана, автофарминг запущен, всё начнётся через 20 секунд...</i>",
+        "farmon": (
+            "<i>✅Отложенка создана, автофарминг запущен, всё начнётся через 20"
+            " секунд...</i>"
+        ),
         "farmon_already": "<i>Уже запущено</i>",
         "farmoff": "<i>❌Автофарминг остановлен.\n☢️Надюпано:</i> <b>%coins% i¢</b>",
         "farm": "<i>☢️Надюпано:</i> <b>%coins% i¢</b>",
@@ -120,7 +125,7 @@ class IrisMod(loader.Module):
                         "coins",
                         self.db.get(self.name, "coins", 0) + int(x[1:]),
                     )
-                    
+
     async def message_q(
         self,
         text: str,
@@ -140,49 +145,81 @@ class IrisMod(loader.Module):
                 await response.delete()
 
             return response
-    
+
     @loader.command()
     async def give(self, message):
         """Передает ириски/голд на другой акк"""
         bot = "@iris_black_bot"
         args = utils.get_args_raw(message)
-        nmb = int(args.split(' ')[1])
-        player = args.split(' ')[2]
-        dada = ''
-        if args.split(' ')[0] == "голд":
-            dada = ' голд'
-        elif args.split(' ')[0] == "ириски" or args[0] == "ирис":
-            dada = ''
+        nmb = int(args.split(" ")[1])
+        if message.is_reply:
+            replied_to = await message.get_reply_message()
+            player = "@" + str(replied_to.from_id)
+        else:            
+            player = args.split(" ")[2]
+        dada = ""
+        if args.split(" ")[0] == "голд":
+            dada = " голд"
+        elif args.split(" ")[0] == "ириски" or args[0] == "ирис":
+            dada = ""
         else:
-            return await utils.answer(message, '❌| Ошибка,что-бы передать требуется написать ириски или голд.')
-    
-        text = f'Передать{dada} {nmb} {player}'
+            return await utils.answer(
+                message, "❌| Ошибка,что-бы передать требуется написать ириски или голд."
+            )
+
+        text = f"Передать{dada} {nmb} {player}"
         try:
             text += f'\n{args.split(" | ")[1]}'
         except IndexError:
             pass
 
-        givs = await self.message_q(text,
+        givs = await self.message_q(
+            text,
             bot,
             mark_read=True,
             delete=True,
         )
 
         await utils.answer(message, givs.text)
-            
+
+    @loader.command()
+    async def baghis(self, message):
+        """Информация где побывали ваши ириски"""
+        bot = "@iris_black_bot"
+        text = f"где мои ириски"
+        givs = await self.message_q(
+            text,
+            bot,
+            mark_read=True,
+            delete=True,
+        )
+
+        await utils.answer(message, givs.text)
+
+
     @loader.command()
     async def bagcmd(self, message):
         """Показывает ваш мешок"""
-        
+
         bot = "@iris_black_bot"
-        bags = await self.message_q("Мешок", bot, delete=True,)
-        
+        bags = await self.message_q(
+            "Мешок",
+            bot,
+            delete=True,
+        )
+
         args = utils.get_args_raw(message)
-        
+
         if not args:
             await utils.answer(message, bags.text)
-    
+
     async def irishcmd(self, message):
         """Помощь по модулю Iris"""
-        ihelp = "🍀| <b>Помощь по командам:</b>\n\n .farmon - Включает авто фарм.\n .farmoff - Выключает авто фарм.\n .farm - Показывает сколько вы нафармили.\n .bag - Показывает ваш ммешок\n .give - передаёт ириски/голд\n\n <b>Пример:</b>\n .give {ириски или голд} {число} {юзер}. - без причины.\n .give {ириски или голд} {число} {юзер} | {причина}"
+        ihelp = (
+            "🍀| <b>Помощь по командам:</b>\n\n .farmon - Включает авто фарм.\n .farmoff"
+            " - Выключает авто фарм.\n .farm - Показывает сколько вы нафармили.\n .bag"
+            " - Показывает ваш ммешок\n .give - передаёт ириски/голд\n\n"
+            " <b>Пример:</b>\n .give {ириски или голд} {число} {юзер}. - без причины.\n"
+            " .give {ириски или голд} {число} {юзер} | {причина}"
+        )
         await utils.answer(message, ihelp)
